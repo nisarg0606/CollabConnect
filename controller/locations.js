@@ -1,4 +1,3 @@
-const e = require('express');
 const pool = require('../supaBase');
 
 // Exporting functions directly as they are declared

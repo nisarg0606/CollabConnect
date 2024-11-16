@@ -10,6 +10,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/locations', require('./routes/locations'));
+app.use('/teams', require('./routes/teams'));
 
 // Start the server
 const PORT = process.env.PORT || 5000;
