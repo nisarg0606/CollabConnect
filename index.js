@@ -1,21 +1,15 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const pool = require('./supaBase'); // Import the database connection
+const cors = require('cors');
 
 const app = express();
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
+app.use(express.json());
 
-// Get all locations
-app.get('/locations', async (req, res) => {
-    try {
-        // Perform the SELECT query on the 'locations' table
-        const result = await pool.query('SELECT * FROM locations');
-        res.json(result.rows);
-    } catch (error) {
-        console.error('Error fetching locations:', error.message);
-        res.status(500).send('Server Error');
-    }
-});
+app.use('/locations', require('./routes/locations'));
 
 // Start the server
 const PORT = process.env.PORT || 5000;
