@@ -1,0 +1,29 @@
+const pool = require('../supaBase');
+const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
+dotenv.config();
+const JWT_SECRET = process.env.JWT_SECRET
+
+module.exports.login = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        const query = `
+            SELECT * 
+            FROM employees 
+            WHERE email_id = $1
+               AND password = $2
+        `;
+
+        const result = await pool.query(query, [email, password]);
+
+        if (result.rows.length === 0) {
+            res.status(404).json({ message: 'No user found' });
+        } else {
+            const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: '3d' });
+            res.status(200).json({ "message": "User logged in successfully", "token": token });
+        }
+    } catch (error) {
+        console.error('Error fetching user:', error.message);
+        res.status(500).send(`Error Message: ${error.message}`);
+    }
+}

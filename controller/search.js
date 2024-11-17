@@ -128,7 +128,6 @@ module.exports.getSearchByProduct = async (req, res) => {
         if (result.rows.length === 0) {
             res.status(404).json({ message: 'No product found' });
         } else {
-            console.log(result.rows);
             res.status(200).json({ "Product details": result.rows, "message: ": "Product found" });
         }
     }

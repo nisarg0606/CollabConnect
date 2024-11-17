@@ -9,6 +9,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 app.use(express.json());
 
+app.use('/login', require('./routes/userLogin'));
 app.use('/locations', require('./routes/locations'));
 app.use('/teams', require('./routes/teams'));
 app.use('/products', require('./routes/products'));
