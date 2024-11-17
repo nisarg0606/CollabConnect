@@ -17,7 +17,7 @@ module.exports.login = async (req, res) => {
         const result = await pool.query(query, [email, password]);
 
         if (result.rows.length === 0) {
-            res.status(404).json({ message: 'No user found' });
+            res.status(404).json({ message: 'User not found or password is incorrect' });
         } else {
             const userFirstName = result.rows[0].first_name;
             const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: '3d' });
