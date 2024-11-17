@@ -3,15 +3,14 @@ const router = express.Router();
 const products = require('../controller/search');
 const authenticateToken = require('../middleware/auth');
 
-router.get('/product/:id', authenticateToken, products.getSearchByProduct);
+// Protected Routes (require authentication)
+router.get('/product/:id', authenticateToken, products.getSearchByProduct); // Main API
+router.get('/repository/:id', authenticateToken, products.getSearchByRepository); // Main API
+router.get('/:id', authenticateToken, products.getSearch); // Main API
 
-router.get('/repository/:id', authenticateToken, products.getSearchByRepository);
-
-// Route to get a specific location by ID
-router.get('/:id', authenticateToken, products.getSearch);
-
-router.get("/search/temp/:id", products.getSearch);
-router.get("/search/tempProduct/:id", products.getSearchByProduct);
-router.get("/search/tempRepository/:id", products.getSearchByRepository);
+// Temporary Routes (no authentication)
+router.get('/temp/search/:id', products.getSearch); // General search
+router.get('/temp/product/:id', products.getSearchByProduct); // Product-specific search
+router.get('/temp/repository/:id', products.getSearchByRepository); // Repository-specific search
 
 module.exports = router;

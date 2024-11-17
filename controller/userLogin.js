@@ -19,8 +19,9 @@ module.exports.login = async (req, res) => {
         if (result.rows.length === 0) {
             res.status(404).json({ message: 'No user found' });
         } else {
+            const userFirstName = result.rows[0].first_name;
             const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: '3d' });
-            res.status(200).json({ "message": "User logged in successfully", "token": token });
+            res.status(200).json({ "message": "User logged in successfully", "token": token, "user": userFirstName });
         }
     } catch (error) {
         console.error('Error fetching user:', error.message);
