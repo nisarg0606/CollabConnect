@@ -12,7 +12,9 @@ app.use(express.json());
 app.use('/locations', require('./routes/locations'));
 app.use('/teams', require('./routes/teams'));
 app.use('/products', require('./routes/products'));
+app.use('/repositories', require('./routes/repository'));
 
+app.use('/search', require('./routes/search'));
 
 // Start the server
 const PORT = process.env.PORT || 5000;

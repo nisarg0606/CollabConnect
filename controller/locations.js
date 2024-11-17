@@ -21,13 +21,13 @@ module.exports.getLocation = async (req, res) => {
             SELECT * 
             FROM locations 
             WHERE CAST(location_id AS TEXT) = $1 
-               OR LOWER(country) = LOWER($1)
-               OR LOWER(city) = LOWER($1)
-               OR LOWER(state) = LOWER($1)
-               OR LOWER(zipcode) = LOWER($1)
+               OR LOWER(country) LIKE LOWER($1)
+               OR LOWER(city) LIKE LOWER($1)
+               OR LOWER(state) LIKE LOWER($1)
+               OR LOWER(zipcode) LIKE LOWER($1)
         `;
 
-        const result = await pool.query(query, [searchValue]);
+        const result = await pool.query(query, [`%${searchValue}%`]);
 
         if (result.rows.length === 0) {
             res.status(404).json({ message: 'No location found' });
@@ -39,4 +39,5 @@ module.exports.getLocation = async (req, res) => {
         res.status(500).send(`Error Message: ${error.message}`);
     }
 };
+
 
