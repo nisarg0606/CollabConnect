@@ -20,7 +20,7 @@ module.exports.getProduct = async (req, res) => {
         const query = `
             SELECT * 
             FROM products 
-            WHERE LOWER(country) = LOWER($1)
+            WHERE LOWER(product_name) = LOWER($1)
         `;
 
         const result = await pool.query(query, [searchValue]);
